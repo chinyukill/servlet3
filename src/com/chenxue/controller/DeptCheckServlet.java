@@ -1,6 +1,7 @@
 package com.chenxue.controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -14,50 +15,47 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-
-
-
 /**
- * Servlet implementation class DeptFindServlet
+ * Servlet implementation class DeptCheckServlet
  */
-@WebServlet("/dept/find.do")
-public class DeptFindServlet extends HttpServlet {
+@WebServlet("/dept/check.do")
+public class DeptCheckServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		try {
+			Thread.sleep(6000);
+		} catch (InterruptedException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		Connection connection=null;
 		PreparedStatement ps=null;
 		ResultSet rs=null;
-		String sql=" select dname,ifnull(job,'û�в���') as job, "
-				+ " count(emp.ename) as jobNum "
-				+ " from dept left join emp "
-				+ " on dept.deptno = emp.deptno "
-				+ " group by dname,job ";
+		String dname=null;
+		String sql=" select count(*) "
+				+ " from dept "
+				+ " where dname=? ";
+		dname=request.getParameter("dname");
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 			connection=DriverManager.getConnection("jdbc:mysql://localhost:3306/chenxue","root","root");
 			ps=connection.prepareStatement(sql);
+			ps.setString(1, dname);
 			rs=ps.executeQuery();
-			Map deptMap = new HashMap();
-			while (rs.next()) {
-				String dname=rs.getString("dname");
-				String job=rs.getString("job");
-				String jobNum=rs.getString("jobNum");
-				Map map=(Map) deptMap.get(dname);
-				if (map==null) {
-					map= new HashMap();
-					map.put(job, jobNum);
-					deptMap.put(dname, map);
-				}else {
-					map.put(job, jobNum);
-				}
-				
+			rs.next();
+			int num=rs.getInt(1);
+			response.setCharacterEncoding("utf-8");
+			PrintWriter outPrintWriter=response.getWriter();
+			response.setContentType("text/html;charset=utf-8");
+			if (num==0) {
+				outPrintWriter.write("部门名称可使用");
+			} else {
+				outPrintWriter.write("部门名重复，请更换");
 			}
-			request.setAttribute("deptInfo", deptMap);
-			request.getRequestDispatcher("/dept_show.jsp").forward(request, response);
 		} catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
