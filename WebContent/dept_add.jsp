@@ -48,8 +48,7 @@ String path = request.getContextPath();String basePath = request.getScheme()+":/
   <script type="text/javascript" src="/Servlet3/js/jQuery-3.4.1.js"></script>
 	<script type="text/javascript">
 		function check(){
-			console.log( $("input[name='dname']").val())
-			$.ajax({
+			/*$.ajax({
 				type:'get',
 				url:'/Servlet3/dept/check.do',
 				data:{dname: $("input[name='dname']").val() },
@@ -57,7 +56,14 @@ String path = request.getContextPath();String basePath = request.getScheme()+":/
 				success:function(data){
 					$('.showInfo').html(data)
 				}
-			})
+			})*/
+			$.get("/Servlet3/dept/check.do",
+				"dname="+$("input[name='dname']").val(),
+				function(data){
+					console.log(data)
+				},
+				"text"
+			)
 		}
 	
 	</script>
