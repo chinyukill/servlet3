@@ -17,8 +17,6 @@ import javax.servlet.http.HttpServletResponse;
 import com.chenxue.bean.Dept;
 
 import net.sf.json.JSONArray;
-import net.sf.json.JSONObject;
-import sun.awt.RepaintArea;
 
 /**
  * Servlet implementation class TestOneServlet
@@ -73,7 +71,6 @@ public class TestOneServlet extends HttpServlet {
 		Connection connection=null;
 		PreparedStatement ps=null;
 		ResultSet rs=null;
-		String dname=null;
 		String keyWord=request.getParameter("keyWord");
 		String sql=" select * "
 				+ " from dept ";
@@ -92,7 +89,7 @@ public class TestOneServlet extends HttpServlet {
 				ps.setString(3, keyWord+"%");
 			}	
 			rs=ps.executeQuery();
-			ArrayList<Dept> deptList = new ArrayList();
+			ArrayList<Dept> deptList = new ArrayList<Dept>();
 			while(rs.next()) {
 				int deptNo = rs.getInt(1);
 				String dName = rs.getString(2);
