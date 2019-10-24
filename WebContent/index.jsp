@@ -19,8 +19,28 @@ String path = request.getContextPath();String basePath = request.getScheme()+":/
 				$(":button:first").click(function(){
 					$.get(
 						"/Servlet3/one.do",
+						"keyWord="+$('input[name="keyWord"]').val(),
 						function(data){
-							console.log(data)
+							var html="";
+							if(data.length>0){
+								html="<tr>"
+									+"<td>部门</td>"
+									+"<td>编号</td>"
+									+"<td>地址</td>"
+									+"</tr>";
+									for(var i=0;i<data.length;i++){
+										html+="<tr>"
+										html+="<td>"+data[i].dName+"</td>"
+										+"<td>"+data[i].deptNo+"</td>"
+										+"<td>"+data[i].loc+"</td>"
+										html+="</tr>"
+									}
+									
+							}else{
+								html+="暂无数据";
+							}
+							$('#deptList').html(html);
+							//$(":button:first").unbind("click");
 						},
 						"json"
 					)
@@ -30,6 +50,8 @@ String path = request.getContextPath();String basePath = request.getScheme()+":/
 	</script>
 </head>
 <body>
-	
+	<input type="text" name="keyWord" class="keyWord" />
+	<button>检索</button>
+	<table id="deptList"></table>
 </body>
 </html>

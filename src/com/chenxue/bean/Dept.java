@@ -22,4 +22,11 @@ public class Dept {
 	public void setLoc(String loc) {
 		this.loc = loc;
 	}
+	public Dept(int deptNo, String dName, String loc) {
+		super();
+		this.deptNo = deptNo;
+		this.dName = dName;
+		this.loc = loc;
+	}
+	
 }

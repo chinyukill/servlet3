@@ -18,5 +18,11 @@
 	<classpathentry kind="lib" path="D:/tomcat9/lib/servlet-api.jar"/>
 	<classpathentry kind="lib" path="D:/tomcat9/lib/standard.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/mysql-connector-java-5.0.8-bin.jar"/>
+	<classpathentry kind="lib" path="D:/tomcat9/lib/commons-beanutils-1.8.3.jar"/>
+	<classpathentry kind="lib" path="D:/tomcat9/lib/commons-collections-3.2.1.jar"/>
+	<classpathentry kind="lib" path="D:/tomcat9/lib/commons-lang-2.5.jar"/>
+	<classpathentry kind="lib" path="D:/tomcat9/lib/commons-logging-1.1.1.jar"/>
+	<classpathentry kind="lib" path="D:/tomcat9/lib/ezmorph-1.0.6.jar"/>
+	<classpathentry kind="lib" path="D:/tomcat9/lib/json-lib-2.4-jdk15.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>
