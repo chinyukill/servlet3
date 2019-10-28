@@ -13,6 +13,7 @@ String path = request.getContextPath();String basePath = request.getScheme()+":/
 	<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
 	<meta http-equiv="description" content="This is my page">
 	<script type="text/javascript" src="/Servlet3/js/jQuery-3.4.1.js"></script>
+	<script type="text/javascript" src="/Servlet3/js/echarts.js"></script>
 	<script type="text/javascript">
 		$.get(
 				"/Servlet3/one.do",
@@ -32,6 +33,8 @@ String path = request.getContextPath();String basePath = request.getScheme()+":/
 								"deptNo="+$('#deptList').val(),
 								function(data){
 									$(".deptTable tr:gt(0)").remove();
+									var xAxisArr=[];
+									var numArr=[]
 									for(var i=0;i<data.length;i++){
 										// var str='<tr><td>'+data[i].dName+'</td><td>'+data[i].jobName+'</td><td>'+data[i].jobNum+'</td></tr>';
 										// $('.deptTable').append(str);
@@ -41,8 +44,8 @@ String path = request.getContextPath();String basePath = request.getScheme()+":/
 											$tr.append($td1)
 										}
 											
-										
-										
+										xAxisArr.push(data[i].jobName);
+										numArr.push(data[i].jobNum);
 										var $td2=$('<td></td>');
 										var $td3=$('<td></td>');
 										//console.log(i,$td1[0],$td2[0],$td3[0])
@@ -52,6 +55,31 @@ String path = request.getContextPath();String basePath = request.getScheme()+":/
 										$tr.append($td2).append($td3);
 										$('.deptTable').append($tr);
 									}
+									
+									var option={
+											title:{
+												text:"部门职位一览",
+												subtext:data[0].dName,
+												x:"center"
+											},
+											xAxis:{
+												data:xAxisArr
+											},
+											yAxis:{},
+											legend:{
+												data:[data[0].dName],
+												left:"left"
+											},
+											series:[{
+												name:data[0].dName,
+												type:"bar",
+												data:numArr
+											}]
+									}
+									var domObj=document.getElementById("main");
+									var echartObj=echarts.init(domObj);
+									echartObj.setOption(option);
+									
 								},
 								"json"
 								)
@@ -70,5 +98,6 @@ String path = request.getContextPath();String basePath = request.getScheme()+":/
 			<td>职位人数</td>
 		</tr>
 	</table>
+	<div id="main" style="width:600px;height:400px;"></div>
 </body>
 </html>
